@@ -1,0 +1,8 @@
+import camion.*
+import cosas.*
+
+describe "probar el camion" {
+  test "funciones del camion" {
+    assert.that(camion.todoPesoPar())
+  }
+}
