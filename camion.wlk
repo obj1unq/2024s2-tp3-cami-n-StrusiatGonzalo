@@ -1,7 +1,7 @@
 import cosas.*
 
 object camion {
-	const property cosas = #{bumblebee}
+	const property cosas = #{}
 	const pesoDeLaTara = 1000
 	const pesoMaximo = 2500
 		
@@ -38,6 +38,7 @@ object camion {
 	method objetosQueSuperanPeligrosidad(nivel) {
 	  return cosas.filter({cosa => cosa.nivelPeligrosidad() > nivel })
 	}
+
 
 	method objetosMasPeligrososQue(cosa2) {
 	  return cosas.filter({cosa => cosa.nivelPeligrosidad() > cosa2.nivelPeligrosidad()})

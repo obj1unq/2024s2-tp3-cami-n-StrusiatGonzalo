@@ -1,8 +1,88 @@
 import camion.*
 import cosas.*
 
-describe "probar el camion" {
+describe "Probar el camion" {
   test "funciones del camion" {
-    assert.that(camion.todoPesoPar())
+    camion.cargar(bumblebee) // cargo a bumble con un peso de 800
+    camion.cargar(knightRider)
+    camion.descargar(knightRider)
+
+
+    assert.that(camion.hayAlgunoQuePesa(800)) // true -> el peso de bumb
+    assert.that(camion.todoPesoPar()) // true -> 800 k
+    assert.notThat(camion.excedidoDePeso()) // false porque tiene 2500 de max
   }
+
+
+  test "prueba de cosas en el camion, me fijo si el peso total de camion es el que le paso.
+  despues si bumblebee supera el nivel de peligrosidad 12. 
+  despues si los objetos que le paso por bloque son los mas peligrosos que arenaAGranel.
+  despues que el camion no pueda circular, desp busco que no haya una cosa que pese entre 1 y 2
+  y por ultimo que me diga si la cosa mas pesada sea bumblebee" {
+    
+    camion.cargar(knightRider) // nivel de peli 2
+    camion.cargar(bumblebee)
+    bumblebee.cambiar() // nivel de peli 30
+
+    assert.equals(2300,camion.pesoTotal())
+    assert.equals(#{bumblebee},camion.objetosQueSuperanPeligrosidad(12)) // el filtro siempre me trae un conjunto con los que cumplen la condi 
+    assert.equals(#{bumblebee,knightRider},camion.objetosMasPeligrososQue(arenaAGranel))
+    assert.notThat(camion.puedeCircularEnRuta(12))
+    assert.notThat(camion.tieneAlgoQuePesaEntre(1,2))
+    assert.equals(bumblebee, camion.cosaMasPesada()) // me trae la cosa mas pesada por eso solo paso el nombre y no en un bloque 
+  }
+
+  test "prueba de bultos, cargo y veo si mi cantidad es de 4 bultos" {
+    camion.cargar(arenaAGranel)
+    camion.cargar(residuosRadioactivos)
+    camion.cargar(bumblebee)
+
+    assert.equals(4,camion.totalBultos())
+  }
+
+  test "prueba de carga en el camion y deposito en el destino" {
+    camion.cargar(bumblebee)
+    camion.cargar(paqueteDeLadrillos)
+    camion.cargar(arenaAGranel)
+    camion.depositarEnDestino(almacen)
+
+    assert.equals(#{},camion.cosas())
+    assert.equals([bumblebee,paqueteDeLadrillos,arenaAGranel], almacen.cosasDelAlmacen()) // como cosasdelalmacen es una lista los obj los tengo que poner en una lista 
+
+  }
+
+  test "vaciar camion"{
+    camion.vaciarCamion()
+
+    assert.equals(#{},camion.cosas())
+  }
+
+  test "validar peso del camion"{
+    camion.cargar(bumblebee)
+    camion.cargar(paqueteDeLadrillos)
+    camion.cargar(arenaAGranel)
+    camion.cargar(bateriaAntiaerea)
+
+    assert.throwsExceptionWithMessage("el camion esta excedido de peso",{camion.validarPeso()})
+  }
+  
+  test "validar transportar por ruta 9 (el camion esta excedido de peso)"{
+    camion.cargar(bumblebee)
+    camion.cargar(paqueteDeLadrillos)
+    camion.cargar(arenaAGranel)
+    camion.cargar(bateriaAntiaerea)
+
+    assert.throwsExceptionWithMessage("el camion esta excedido de peso",{camion.trasportar(almacen,ruta9)})
+  }
+
+    test "validar transportar por caminosVecinales (no hay lugares disponibles para guardar el bulto)"{
+    almacen.agregar(bumblebee)
+    almacen.agregar(paqueteDeLadrillos)
+    almacen.agregar(arenaAGranel)
+    camion.cargar(bateriaAntiaerea)
+    
+
+    assert.throwsExceptionWithMessage("no hay lugares disponibles para guardar el bulto",{camion.trasportar(almacen,caminosVecinales)})
+  }
+
 }

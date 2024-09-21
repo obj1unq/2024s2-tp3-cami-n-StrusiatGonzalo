@@ -17,7 +17,7 @@ object knightRider {
 }
 
 object bumblebee {
-  var property estadoDeBumblebee = bumblebeeRobot
+  var property estadoDeBumblebee = bumblebeeAuto
 
 	method peso() {
 	  return 800
