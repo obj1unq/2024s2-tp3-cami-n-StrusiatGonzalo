@@ -65,7 +65,7 @@ object paqueteDeLadrillos {
 	  if (ladrillos < 100) {
 		return 1
 	  } else { 
-		if (ladrillos < 301){
+		if (ladrillos < 300){
 			return 2
 		}else{
 			return 3

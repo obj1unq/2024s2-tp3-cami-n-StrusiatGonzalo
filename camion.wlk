@@ -74,10 +74,10 @@ object camion {
 	  cosas.clear() // clear vacia la lista dada 
 	}
 
-	method trasportar(destino,camino) {
+	method trasportar(camino,destino) {
 	  self.validarPeso()
-	  self.validarCantidadDeBulto(destino)
-	  self.validarCamino(destino)
+	  destino.validarCantidadDeBulto()
+	  camino.validarCamino()
 	  self.depositarEnDestino(destino)
 	}
 
@@ -87,19 +87,9 @@ object camion {
 	  }
 	}
 
-	method validarCantidadDeBulto(destino) {
-	  if ( destino.lugaresDisponibles() < cosas.size()){
-		self.error("no hay lugares disponibles para guardar el bulto")
-	  }
+	method cantidadDeCosas() {
+	  return cosas.size()
 	}
-
-	method validarCamino(destino) {
-	  if (not destino.noPuedeCircular(self)){
-		self.error("no puede circular en el destino dado")
-	  }
-	}
-
-
 }
 
 
@@ -114,6 +104,12 @@ object almacen {
   method lugaresDisponibles() {
 	return  capacidadMaxima - cosasDelAlmacen.size()
   }
+
+  method validarCantidadDeBulto() {
+	  if ( self.lugaresDisponibles() < camion.cantidadDeCosas()){
+		self.error("no hay lugares disponibles para guardar el bulto")
+	  }
+  }
 }
 
 
@@ -126,6 +122,12 @@ object ruta9 {
   method noPuedeCircular(vehiculo) {
 	return not vehiculo.puedeCircularEnRuta(self.nivelPeligrosidad())
   }
+
+  method validarCamino() {
+	  if (not self.noPuedeCircular(camion)){
+		self.error("no puede circular en el destino dado")
+	  }
+  }
 }
 
 object caminosVecinales {
@@ -133,6 +135,12 @@ object caminosVecinales {
 
     method noPuedeCircular(vehiculo) {
 	return pesoMaximo < vehiculo.pesoTotal() 
+    }
+
+  method validarCamino() {
+	  if (not self.noPuedeCircular(camion)){
+		self.error("no puede circular en el destino dado")
+	  }
   }
 }
 

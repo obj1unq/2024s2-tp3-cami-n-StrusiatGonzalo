@@ -82,7 +82,7 @@ describe "Probar el camion" {
     camion.cargar(bateriaAntiaerea)
     
 
-    assert.throwsExceptionWithMessage("no hay lugares disponibles para guardar el bulto",{camion.trasportar(almacen,caminosVecinales)})
+    assert.throwsExceptionWithMessage("no hay lugares disponibles para guardar el bulto",{camion.trasportar(caminosVecinales,almacen)})
   }
 
 }
