@@ -2,6 +2,9 @@ import camion.*
 import cosas.*
 
 describe "Probar el camion" {
+  
+  var camion = new Camion(cosas = #{bumblebee},pesoDeLaTara = 850,pesoMaximo = 25)
+  
   test "funciones del camion" {
     camion.cargar(bumblebee) // cargo a bumble con un peso de 800
     camion.cargar(knightRider)
@@ -19,6 +22,8 @@ describe "Probar el camion" {
   despues si los objetos que le paso por bloque son los mas peligrosos que arenaAGranel.
   despues que el camion no pueda circular, desp busco que no haya una cosa que pese entre 1 y 2
   y por ultimo que me diga si la cosa mas pesada sea bumblebee" {
+    
+    camion =  new Camion(cosas = #{bumblebee},pesoDeLaTara = 80,pesoMaximo = 25)
     
     camion.cargar(knightRider) // nivel de peli 2
     camion.cargar(bumblebee)

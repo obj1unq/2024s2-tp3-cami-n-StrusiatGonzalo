@@ -1,9 +1,10 @@
 import cosas.*
 
-object camion {
+class Camion {
 	const property cosas = #{}
 	const pesoDeLaTara = 1000
 	const pesoMaximo = 2500
+
 		
 	method cargar(unaCosa) {
 		cosas.add(unaCosa)
@@ -14,6 +15,7 @@ object camion {
 	method descargar(cosa) {
 	  cosas.remove(cosa)
 	}
+
 
 	method todoPesoPar() {
 	 return  cosas.all({cosa => cosa.peso().even()})
@@ -91,6 +93,9 @@ object camion {
 	  return cosas.size()
 	}
 }
+
+const camion = new Camion(cosas = #{bumblebee},pesoDeLaTara = 850,pesoMaximo = 25)
+
 
 
 object almacen {

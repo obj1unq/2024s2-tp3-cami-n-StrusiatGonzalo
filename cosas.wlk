@@ -147,7 +147,7 @@ object contenedorPortuario {
   }
 
   method nivelPeligrosidad() {
-	return self.nivelesDeTodasLasCosas().maxIfEmpty() // si no hay maximo me da cero
+	return self.nivelesDeTodasLasCosas().maxIfEmpty({0}) // si no hay maximo me da cero, tengo que pasar el cero por parametro.
   }
 
   method nivelesDeTodasLasCosas() {
